@@ -24,6 +24,11 @@ function insertPostData() {
       title: "Post Two",
       body: "This is another post we will be including in our database.",
     },
+    {
+      title: "Post Three",
+      body: "This is a third post we will be including in our database.",
+      createdAt: "1-25-2024",
+    },
   ]);
 }
 
