@@ -18,23 +18,24 @@ router.get("/", async (req, res) => {
   }
 });
 
-//app.get('/', (req, res) => res.render(''))
+router.get("/about", (req, res) => res.render("about"));
 
 //  GET POST BY ID
-// router.get("/post/:id", async (req,res) => {
-//   try {
-//     let slug = req.params.id;
+router.get("/post/:id", async (req, res) => {
+  try {
+    let slug = req.params.id;
 
-//     const data = await Post.findById({_id: slug});
+    const data = await Post.findById({ _id: slug });
 
-//     const locals {
-//       title: data.title,
-//       description: "A Blog template application that will be used for your own use.",
-//     }
-
-//   } catch (error) {
-//     console.log(error);
-//   }
-// })
+    const locals = {
+      title: data.title,
+      description:
+        "A Blog template application that will be used for your own use.",
+    };
+    res.render("post", { locals, data });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 module.exports = router;
