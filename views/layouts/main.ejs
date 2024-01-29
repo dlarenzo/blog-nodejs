@@ -9,6 +9,11 @@
     <!-- locals refers to the server > routes > main.js > const locals > title -->
   </head>
   <body>
-    Hello World
+    <%-include("../partials/header.ejs")%>
+    <div class="container">
+      <%-include("../partials/header.ejs")%>
+      <main class="main"><%- body %></main>
+      <%-include("../partials/footer.ejs")%>
+    </div>
   </body>
 </html>
