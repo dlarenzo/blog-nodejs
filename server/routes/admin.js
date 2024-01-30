@@ -133,4 +133,88 @@ router.get("/logout", authMiddleware, async (req, res) => {
   }
 });
 
+/** GET / ADD-POST
+ * ADMIN - CREATE NEW POST
+ **/
+router.get("/add-post", authMiddleware, async (req, res) => {
+  try {
+    const locals = {
+      title: "Create Post",
+      description: " A blog template made with NodeJS and ExpressJS, and EJS",
+    };
+
+    const data = await Post.find();
+    res.render("admin/add-post", { locals, data, layout: adminLayout });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+/** POST / ADD-POST
+ * ADMIN - CREATE NEW POST
+ **/
+router.post("/add-post/", authMiddleware, async (req, res) => {
+  try {
+    console.log(req.body);
+    try {
+      const newPost = new Post({
+        title: req.body.title,
+        body: req.body.body,
+      });
+      await Post.create(newPost);
+      res.redirect("/dashboard");
+    } catch (error) {
+      console.log(error);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+/** POST / EDIT-POST
+ * ADMIN - UPDATE POST
+ **/
+
+router.get("/edit-post/:id", authMiddleware, async (req, res) => {
+  try {
+    const locals = {
+      title: "Edit Post",
+      description: " Ablog template made with NodeJS and ExpressJS, and EJS",
+    };
+
+    const data = await Post.findOne({ _id: req.params.id });
+    res.render("admin/edit-post", { locals, data, layout: adminLayout });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+/** PUT / EDIT-POST
+ * ADMIN - EDIT POST
+ **/
+router.put("/edit-post/:id", authMiddleware, async (req, res) => {
+  try {
+    await Post.findByIdAndUpdate(req.params.id, {
+      title: req.body.title,
+      body: req.body.body,
+      updatedAt: Date.now(),
+    });
+    res.redirect(`/dashboard`);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+/** DELETE / DELETE-POST
+ * ADMIN - DELETE POST
+ **/
+router.delete("/delete-post/:id", authMiddleware, async (req, res) => {
+  try {
+    await Post.deleteOne({ _id: req.params.id });
+    res.redirect("/dashboard");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = router;
