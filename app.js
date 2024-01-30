@@ -5,7 +5,7 @@ const MongoStore = require("connect-mongo");
 const expressLayouts = require("express-ejs-layouts");
 const express = require("express");
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 const methodOverride = require("method-override");
 const session = require("express-session");
@@ -36,5 +36,6 @@ app.set("layout", "./layouts/main");
 app.set("view engine", "ejs");
 
 app.use("/", require("./server/routes/main"));
+app.use("/", require("./server/routes/admin"));
 
 app.listen(PORT, () => console.log(`server is running on port: ${PORT}`));
